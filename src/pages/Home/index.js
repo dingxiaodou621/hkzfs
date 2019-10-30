@@ -35,7 +35,7 @@ class Home extends React.Component {
 
     renderComponent = (path) => {
       switch (path) {
-        case '/home/index':
+        case '/home':
           return <Index />
         case '/home/house':
           return <HouseList />
