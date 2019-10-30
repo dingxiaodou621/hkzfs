@@ -1,1 +1,21 @@
 /* 公共样式 */
+html,
+body {
+    height: 100%;
+    color: #333333;
+    background-color: #fff;
+}
+
+* {
+    /* 先不管，后面解释 */
+    touch-action: pan-y;
+    box-sizing: border-box;
+}
+
+#root,.App {
+    height: 100%;
+}
+
+p {
+    margin: 0;
+}
