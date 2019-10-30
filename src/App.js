@@ -14,11 +14,16 @@ class App extends React.Component {
     return (
       <Router>
         <div className="App">
-          <Route exact path="/" component={Home}></Route>
+        {/* <Link to="/home">Home</Link>
+        <Link to="/map">Map</Link> */}
+
+          {/* App.js的路由相当于一级路由
+              home/index.js的路由相当于二级路由
+           */}
+          <Route path="/" component={Home}></Route>
           <Route path="/map" component={Map}></Route> 
           
-          <Link to="/">首页</Link>
-          <Link to="/map">地图</Link>
+         
         </div>
       </Router>
     )
