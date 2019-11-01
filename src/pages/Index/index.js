@@ -12,6 +12,8 @@ class Index extends React.Component {
       
     // 获取数据的方法
     // 获取轮播图数据
+
+    // async修饰的函数返回一个 Promise 对象
     loadSwiper = async () => {
         const { data } = await getSwiper()
         const { status, body } = data
@@ -19,7 +21,8 @@ class Index extends React.Component {
             this.setState(() => {
                 return {
                 swiperData:body
-            }})
+                }
+            })
         }
     }
     async componentDidMount() {
