@@ -8,7 +8,11 @@ body {
 
 * {
     /* 先不管，后面解释 */
-    touch-action: pan-y;
+    /*  触碰轮播图-> 就警告
+        红色警告->来源于Chrome浏览器 */
+    /* touch-action: pan-y; */
+    touch-action:none;
+
     box-sizing: border-box;
 }
 
