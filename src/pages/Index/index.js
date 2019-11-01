@@ -1,6 +1,7 @@
 import React from 'react'
 import { Carousel } from 'antd-mobile'
-import axios from 'axios'
+
+import {getSwiper} from './api.js'
 
 const BaseURL = `http://localhost:8080`
 class Index extends React.Component {
@@ -12,7 +13,7 @@ class Index extends React.Component {
     // 获取数据的方法
     // 获取轮播图数据
     loadSwiper = async () => {
-        const { data } = await axios.get(`http://localhost:8080/home/swiper`)
+        const { data } = await getSwiper()
         const { status, body } = data
         if (status === 200) {
             this.setState(() => {
