@@ -1,9 +1,44 @@
 import React from 'react'
-import { Carousel } from 'antd-mobile'
+import { Carousel,Flex } from 'antd-mobile'
 
-import {getSwiper} from './api.js'
+import { getSwiper } from './api.js'
+import {withRouter} from 'react-router-dom'
+
+import Nav1 from '../../assets/images/nav-1.png'
+import Nav2 from '../../assets/images/nav-2.png'
+import Nav3 from '../../assets/images/nav-3.png'
+import Nav4 from '../../assets/images/nav-4.png'
+
+import './index.css'
 
 const BaseURL = `http://localhost:8080`
+
+// 导航（4个）的数据
+const navs = [{
+        img: Nav1,
+        title: "整租",
+        path: "/home/list",
+        id:0
+    },
+    {
+        img: Nav2,
+        title: "合租",
+        path: "/home/list",
+        id:1
+    },
+    {
+        img: Nav3,
+        title: "地图找房",
+        path: "/map",
+        id:2
+    },
+    {
+        img: Nav4,
+        title: "去出租",
+        path: "/login",
+        id:3
+    }
+]
 class Index extends React.Component {
     state = {
         swiperData: [],
@@ -62,6 +97,22 @@ class Index extends React.Component {
             </a>
         ))
     }
+
+    // 渲染导航单元格
+    renderNav = () => {
+        return navs.map((item) => {
+            return (
+                <Flex.Item className="nav" key={item.id}
+                    onClick={() => {
+                    this.props.history.push(item.path)
+                }}
+                >
+                    <img src={item.img} alt="图片无法显示" />
+                    <p>{item.title}</p>
+                </Flex.Item>
+            )
+        })  
+    }
     render() {
         const {loadfinished} = this.state
         return (
@@ -78,7 +129,9 @@ class Index extends React.Component {
                 {this.renderSwiper()}
             </Carousel>
                 {/* 导航 (4个) */}
-
+                <Flex>
+                    {this.renderNav()}
+                </Flex>
                 {/* 租房小组-宫格菜单(4个) */}
 
                 {/* 导航-搜索 */}
@@ -86,4 +139,4 @@ class Index extends React.Component {
         )
     }
 }
-export default Index
+export default withRouter(Index)
