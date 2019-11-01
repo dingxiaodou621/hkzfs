@@ -42,7 +42,10 @@ const navs = [{
 class Index extends React.Component {
     state = {
         swiperData: [],
-        groupsData:[],
+        groupsData:Array.from(new Array(4)).map((_val, i) => ({
+            icon: 'https://gw.alipayobjects.com/zos/rmsportal/nywPmnTAvTmLusPxHPSu.png',
+            text: `name${i}`,
+          })),
         imgHeight: 176,
         loadfinished:false
       }
@@ -75,13 +78,11 @@ class Index extends React.Component {
         const { data } = await getGroups()
         const { status, body } = data
         if (status === 200) {
-            this.setState(
-                () => {
-                    return {
-                        groupsData:body //数组数据修改完毕
-                    }
+            this.setState(() => {
+                return {
+                    groupsData:body //数组数据修改完毕
                 }
-            )
+            })
         }
     }
 
@@ -116,22 +117,53 @@ class Index extends React.Component {
     }
 
     // 渲染导航单元格
-    renderNav = () => {
-        return navs.map((item) => {
-            return (
-                <Flex.Item className="nav" key={item.id}
-                    onClick={() => {
-                    this.props.history.push(item.path)
-                }}
-                >
-                    <img src={item.img} alt="图片无法显示" />
-                    <p>{item.title}</p>
-                </Flex.Item>
-            )
-        })  
+    renderNav = () => 
+        navs.map(item => (
+            <Flex.Item className="nav" key={item.id}
+                onClick={() => {
+                this.props.history.push(item.path)
+            }}
+            >
+                <img src={item.img} alt="图片无法显示" />
+                <p>{item.title}</p>
+            </Flex.Item>
+        )) 
+
+    // 渲染租房小组的宫格（4个）
+    renderGrid = () => {
+        const {groupsData} = this.state
+        return (
+            <Grid
+                columnNum={2}
+                square={false}
+                activeStyle
+                hasLine={false}
+                data={groupsData}
+                renderItem={(item) => (
+                    <Flex className="grid-item" justify="between">
+                        <div className="desc">
+                            <h3>{item.title}</h3>
+                            <p>{item.desc}</p>
+                        </div>
+                        <img src={`${BaseURL}${item.imgSrc}`} alt="" />
+                    </Flex>
+                )}
+            />
+        )
+    }
+
+    // 
+    renderGrouptitle = () => {
+        return (
+            <Flex className="group-title" justify="between">
+                <h3>租房小组</h3>
+                <span>更多</span>
+            </Flex>
+        )
     }
     render() {
-        const {loadfinished} = this.state
+        const { loadfinished } = this.state
+        
         return (
             <div>
                 {/* 轮播图
@@ -142,21 +174,20 @@ class Index extends React.Component {
                     1. 第一次render -> autoplay=true
                     2. 数据请求完毕 -> render -> autoplay=true 未执行
                 */}
-                <Carousel autoplay={loadfinished} infinite>
-                    {this.renderSwiper()}
-                </Carousel>
-                <Flex>{this.renderNav()}</Flex>
+                    <Carousel autoplay={loadfinished} infinite>
+                        {this.renderSwiper()}
+                    </Carousel>
+                    <Flex>{this.renderNav()}</Flex>
 
                 {/* 租房小组-标题-知识点：node-sass的使用 */}
                 <div className="group">
-                    <Flex className="group-title" justify="between">
-                        <h3>租房小组</h3>
-                        <span>更多</span>
-                    </Flex>
+                    {this.renderGrouptitle()}
+
+                    {/* 宫格菜单(4个) */}
+                    {this.renderGrid()}
                 </div>
-
-                {/* 宫格菜单(4个) */}
-
+                
+                
                 {/* 最新资讯 (3个单元格) */}
 
                 {/* 导航-搜索 */}
