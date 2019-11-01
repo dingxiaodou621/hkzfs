@@ -1,5 +1,5 @@
 import React from 'react'
-import { Carousel,Flex } from 'antd-mobile'
+import { Carousel,Flex,Grid } from 'antd-mobile'
 
 import { getSwiper } from './api.js'
 import {withRouter} from 'react-router-dom'
@@ -9,7 +9,7 @@ import Nav2 from '../../assets/images/nav-2.png'
 import Nav3 from '../../assets/images/nav-3.png'
 import Nav4 from '../../assets/images/nav-4.png'
 
-import './index.css'
+import './index.scss'
 
 const BaseURL = `http://localhost:8080`
 
@@ -125,14 +125,22 @@ class Index extends React.Component {
                     1. 第一次render -> autoplay=true
                     2. 数据请求完毕 -> render -> autoplay=true 未执行
                 */}
-            <Carousel autoplay={loadfinished} infinite>
-                {this.renderSwiper()}
-            </Carousel>
-                {/* 导航 (4个) */}
-                <Flex>
-                    {this.renderNav()}
-                </Flex>
-                {/* 租房小组-宫格菜单(4个) */}
+                <Carousel autoplay={loadfinished} infinite>
+                    {this.renderSwiper()}
+                </Carousel>
+                <Flex>{this.renderNav()}</Flex>
+
+                {/* 租房小组-标题-知识点：node-sass的使用 */}
+                <div className="group">
+                    <Flex className="group-title" justify="between">
+                        <h3>租房小组</h3>
+                        <span>更多</span>
+                    </Flex>
+                </div>
+
+                {/* 宫格菜单(4个) */}
+
+                {/* 最新资讯 (3个单元格) */}
 
                 {/* 导航-搜索 */}
             </div>
