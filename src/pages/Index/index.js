@@ -7,7 +7,8 @@ const BaseURL = `http://localhost:8080`
 class Index extends React.Component {
     state = {
         swiperData: [],
-        imgHeight: 176
+        imgHeight: 176,
+        loadfinished:false
       }
       
     // 获取数据的方法
@@ -18,10 +19,18 @@ class Index extends React.Component {
         const { data } = await getSwiper()
         const { status, body } = data
         if (status === 200) {
-            this.setState(() => {
-                return {
-                swiperData:body
-                }
+            this.setState(
+                () => {
+                    return {
+                        swiperData:body //数组数据修改完毕
+                    }
+                },
+                () => {
+                    this.setState(() => {
+                        return {
+                            loadfinished:true
+                    }
+                })
             })
         }
     }
@@ -54,14 +63,18 @@ class Index extends React.Component {
         ))
     }
     render() {
+        const {loadfinished} = this.state
         return (
             <div>
                 {/* 轮播图
 
                     先写数据，再写页面
                     先写页面div+css,再写数据ajax
+
+                    1. 第一次render -> autoplay=true
+                    2. 数据请求完毕 -> render -> autoplay=true 未执行
                 */}
-            <Carousel autoplay={true} infinite>
+            <Carousel autoplay={loadfinished} infinite>
                 {this.renderSwiper()}
             </Carousel>
                 {/* 导航 (4个) */}
