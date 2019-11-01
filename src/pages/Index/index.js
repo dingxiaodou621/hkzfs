@@ -1,7 +1,7 @@
 import React from 'react'
-import { Carousel,Flex,Grid } from 'antd-mobile'
+import { Carousel, Flex, Grid } from 'antd-mobile'
 
-import { getSwiper } from './api.js'
+import { getSwiper, getGroups } from './api.js'
 import {withRouter} from 'react-router-dom'
 
 import Nav1 from '../../assets/images/nav-1.png'
@@ -42,6 +42,7 @@ const navs = [{
 class Index extends React.Component {
     state = {
         swiperData: [],
+        groupsData:[],
         imgHeight: 176,
         loadfinished:false
       }
@@ -69,8 +70,24 @@ class Index extends React.Component {
             })
         }
     }
+
+    loadGroups = async () => {
+        const { data } = await getGroups()
+        const { status, body } = data
+        if (status === 200) {
+            this.setState(
+                () => {
+                    return {
+                        groupsData:body //数组数据修改完毕
+                    }
+                }
+            )
+        }
+    }
+
     async componentDidMount() {
         this.loadSwiper()
+        this.loadGroups()
     }
 
     // 渲染模板的方法-------
